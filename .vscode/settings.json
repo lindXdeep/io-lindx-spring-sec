@@ -1,16 +1,17 @@
 {
-    "files.exclude": {
-        "**/.classpath": false,
-        "**/.project": true,
-        "**/.settings": true,
-        "**/.factorypath": false,
-        "**/.gitignore": true,
-        "README.md":true,
-        "LICENSE":true,
-        ".dccache":true
-    },
-
-    "workspaceCacheClean.silent": false,
-    "workspaceCacheClean.autoReload": false,
-    "java.configuration.updateBuildConfiguration": "automatic",
+  "files.exclude": {
+    "**/.classpath": false,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": false,
+    "**/.gitignore": true,
+    "README.md": true,
+    "LICENSE": true,
+    ".dccache": true,
+    ".mvn/": true,
+    "mvnw.cmd": true
+  },
+  "workspaceCacheClean.silent": false,
+  "workspaceCacheClean.autoReload": false,
+  "java.configuration.updateBuildConfiguration": "automatic",
 }

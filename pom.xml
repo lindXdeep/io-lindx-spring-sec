@@ -21,8 +21,7 @@
     <main.class>io.lindx.sec.App</main.class>
   </properties>
 
-  <dependencies>
-  </dependencies>
+  <dependencies></dependencies>
 
   <build>
 
@@ -42,7 +41,26 @@
           </executable>
         </configuration>
       </plugin>
+
+      <plugin>
+        <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <executable>java</executable>
+          <arguments>
+            <argument>-classpath</argument>
+            <!-- automatically creates the classpath using all project dependencies,
+					       also adding the project build directory -->
+            <classpath />
+            <argument>${main.class}</argument>
+          </arguments>
+        </configuration>
+      </plugin>
     </plugins>
+
+
   </build>
 
 </project>
