@@ -9,3 +9,11 @@ compile:
 
 execute:
 	./mvnw exec:exec
+
+build:
+	./mvnw package assembly:single
+
+run:
+	java -jar ./target/io-lindx-sec-jar-with-dependencies.jar 
+
+
