@@ -1,6 +1,6 @@
 {
   "files.exclude": {
-    "**/.classpath": false,
+    "**/.classpath": true,
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": false,
@@ -9,7 +9,13 @@
     "LICENSE": true,
     ".dccache": true,
     ".mvn/": true,
-    "mvnw.cmd": true
+    "mvnw.cmd": true,
+    "mvnw": true,
+
+    "target/archive-tmp": true,
+    "target/generated-sources": true,
+    "target/maven-status": true,
+    "target/test-classes": true,
   },
   "workspaceCacheClean.silent": false,
   "workspaceCacheClean.autoReload": false,
