@@ -6,7 +6,7 @@
   <groupId>io.lindx.sec</groupId>
   <artifactId>io-lindx-spring-sec</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
 
   <name>io-lindx-sec</name>
   <url>https://github.com/lindXdeep/io-lindx-spring-sec</url>
@@ -22,6 +22,15 @@
   </properties>
 
   <dependencies>
+    
+    <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>4.0.1</version>
+      <scope>provided</scope>
+    </dependency>
+
     <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
     <dependency>
       <groupId>org.springframework</groupId>
@@ -50,36 +59,15 @@
       </plugin>
 
       <plugin>
-        <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>3.0.0</version>
-        <configuration>
-          <executable>java</executable>
-          <arguments>
-            <argument>-classpath</argument>
-            <!-- automatically creates the classpath using all project dependencies,
-					       also adding the project build directory -->
-            <classpath />
-            <argument>${main.class}</argument>
-          </arguments>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-assembly-plugin -->
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-war-plugin -->
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.3.0</version>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.3.1</version>
         <configuration>
-          <archive>
-            <manifest>
-              <mainClass>${main.class}</mainClass>
-            </manifest>
-          </archive>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+          <webappDirectory>
+            ${CATALINA_BASE}/webapps/myapp
+          </webappDirectory>
         </configuration>
       </plugin>
 
@@ -103,8 +91,8 @@
           </dependency>
         </dependencies>
         <configuration>
-          <configLocation>src/main/test/resources/checkstyle/checkstyle.xml</configLocation>
-          <suppressionsLocation>src/main/test/resources/checkstyle/checkstyle_suppressions.xml</suppressionsLocation>
+          <configLocation>src/test/resources/checkstyle/checkstyle.xml</configLocation>
+          <suppressionsLocation>src/test/resources/checkstyle/checkstyle_suppressions.xml</suppressionsLocation>
           <encoding>UTF-8</encoding>
           <consoleOutput>true</consoleOutput>
           <failsOnError>true</failsOnError>
@@ -113,8 +101,5 @@
       </plugin>
 
     </plugins>
-
-
   </build>
-
 </project>

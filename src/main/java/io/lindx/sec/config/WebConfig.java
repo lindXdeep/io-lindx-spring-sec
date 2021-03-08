@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * webconfig.
  */
 @Configuration
-@ComponentScan(value = "io.lindx.sec")
+@ComponentScan(value = "io.lindx.sec.controllers")
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 

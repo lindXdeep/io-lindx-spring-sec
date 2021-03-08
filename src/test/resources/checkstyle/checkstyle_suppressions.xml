@@ -5,4 +5,5 @@
   <suppress checks="LineLength" />
   <suppress checks="Indentation" />
   <suppress checks="SummaryJavadoc" />
+  <suppress checks="NoWhitespaceAfter" />
 </suppressions>

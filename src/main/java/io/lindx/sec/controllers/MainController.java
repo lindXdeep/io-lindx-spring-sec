@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/")
-public class FrontController {
+public class MainController {
 
   /**
    * Main controller.
@@ -14,6 +14,9 @@ public class FrontController {
    */
   @GetMapping
   public String main() {
+
+    System.out.println("we are in main !!!");
+
     return "main";
   }
 }

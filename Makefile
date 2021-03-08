@@ -1,13 +1,7 @@
-.DEFAULT_GOAL := build-run
+.DEFAULT_GOAL := build
 
 setup:
 	mvn -N io.takari:maven:wrapper -Dmaven=3.6.3
-
-clean:
-	./mvnw clean
-
-compile:
-	./mvnw compiler:compile
 
 lint-default:
 	./mvnw checkstyle:checkstyle
@@ -15,17 +9,21 @@ lint-default:
 lint-google:
 	./mvnw checkstyle:check -Dcheckstyle.config.location=./checkstyle/google_checks.xml
 
-execute:
-	./mvnw exec:exec
+clean:
+	./mvnw clean
+	rm -R ${CATALINA_BASE}/webapps/myapp/*
+
+compile:
+	./mvnw compiler:compile
+
+deploy:
+	rm -R ${CATALINA_BASE}/webapps/myapp/*
+	./mvnw package war:war
 
 build:
-	./mvnw package assembly:single
-
-run:
-	java -jar ./target/io-lindx-sec-jar-with-dependencies.jar 
+	./mvnw package war:exploded
 
 lint: lint-default lint-google
 
-build-run: build run
 
 
