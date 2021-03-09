@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 
 <head>
   <title> Main page</title>
 </head>
 
 <body>
-  Hello, ${user.name} !
+  <p th:text="${user.name}"></p>
 </body>
 
 </html>

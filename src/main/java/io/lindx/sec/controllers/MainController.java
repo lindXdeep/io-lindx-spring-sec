@@ -1,6 +1,7 @@
 package io.lindx.sec.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,9 +14,20 @@ public class MainController {
    * @return main page
    */
   @GetMapping
-  public String main() {
+  public String main(Model model) {
+    class User {
+      private String name;
+      public User(String name){
+        this.name = name;
+      } 
+      public String getName() {
+        return name;
+      }
+    }
 
-    System.out.println("we are in main !!!");
+    User user = new User("user");
+
+    model.addAttribute("user", user);
 
     return "main";
   }

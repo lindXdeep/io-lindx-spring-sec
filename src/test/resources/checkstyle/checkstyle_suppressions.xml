@@ -3,7 +3,7 @@
 
 <suppressions>
   <suppress checks="LineLength" />
-  <suppress checks="Indentation" />
   <suppress checks="SummaryJavadoc" />
-  <suppress checks="NoWhitespaceAfter" />
+  <suppress files="src/main/java/io/lindx/sec/config/WebInit\.java" checks="NoWhitespaceAfter" />
+  <suppress files="src/main/java/io/lindx/sec/config/WebConfig\.java" checks="HiddenField" />
 </suppressions>

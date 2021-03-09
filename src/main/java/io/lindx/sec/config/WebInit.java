@@ -3,7 +3,7 @@ package io.lindx.sec.config;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
- * WebInit.
+ * DispatcherServlet.
  */
 public class WebInit extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -24,7 +24,7 @@ public class WebInit extends AbstractAnnotationConfigDispatcherServletInitialize
   }
 
   /**
-   * Front controller. (DispatcherServlet).
+   * Front controller.
    */
   @Override
   protected String[] getServletMappings() {

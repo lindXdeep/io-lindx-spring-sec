@@ -2,4 +2,4 @@
 .project
 .dccache
 target/
-.gitignore
+out/

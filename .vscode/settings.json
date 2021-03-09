@@ -11,6 +11,7 @@
     ".mvn/": true,
     "mvnw.cmd": true,
     "mvnw": true,
+    "out/": true,
 
     "target/archive-tmp": true,
     "target/generated-sources": true,
