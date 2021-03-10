@@ -12,11 +12,24 @@
     "mvnw.cmd": true,
     "mvnw": true,
     "out/": true,
+    ".factorypath": true,
+    "Makefile": false,
 
     "target/archive-tmp": true,
     "target/generated-sources": true,
     "target/maven-status": true,
     "target/test-classes": true,
+    "target/": true,
+
+    "src/test": true,
+    "src/main/resources": true,
+    "src/main/java/io/lindx/sec/dao": false,
+    "src/main/java/io/lindx/sec/service": false,
+    "src/main/java/io/lindx/sec/models": false,
+
+    
+
+
   },
   "workspaceCacheClean.silent": false,
   "workspaceCacheClean.autoReload": false,

@@ -17,13 +17,28 @@ compile:
 	./mvnw compiler:compile
 
 deploy:
+	./mvnw package war:war
+
+redeploy:
 	rm -R ${CATALINA_BASE}/webapps/myapp/*
 	./mvnw package war:war
 
 build:
-	./mvnw package war:exploded
+	./mvnw package war:exploded 
 
 lint: lint-default lint-google
+
+open-chrome:
+	google-chrome --new-window http://localhost:8080
+
+open-firefox:
+	firefox --new-window http://localhost:8080
+
+browse:
+	browse http://localhost:8080
+
+code:
+	code-oss $@
 
 
 

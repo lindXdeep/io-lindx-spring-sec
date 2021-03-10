@@ -16,7 +16,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
  * WebConfig.
  */
 @Configuration
-@ComponentScan(value = "io.lindx.sec.controllers")
+@ComponentScan(value = "io.lindx.sec")
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
