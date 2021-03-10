@@ -3,6 +3,7 @@ package io.lindx.sec.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import io.lindx.sec.dao.UserDaoImpl;
@@ -13,6 +14,9 @@ public class UserServiceImpl implements UserService {
 
   @Autowired
   private UserDaoImpl userDao;
+
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
   /**
    * service method.
@@ -35,6 +39,7 @@ public class UserServiceImpl implements UserService {
    */
   @Override
   public void setUser(final User user) {
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
     userDao.setUser(user);
   }
 

@@ -10,6 +10,9 @@
   <div th:each=" user : ${users}">
     <p th:text="${user.name} + ' '+ ${user.mail}">user</p>
   </div>
+  <div>
+    <a href="/logout">Logout</a>
+  </div>
 </body>
 
 </html>

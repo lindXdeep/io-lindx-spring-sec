@@ -44,15 +44,9 @@ public class AuthProviderImpl implements AuthenticationProvider {
     }
 
     String password = authentication.getCredentials().toString();
-
-    if (!password.equals(user.getPassword())) {
+    if (!passwordEncoder.matches(password, user.getPassword())) {
       throw new BadCredentialsException("Bad credentials");
     }
-
-    // if(!passwordEncoder.matches(password, user.getPassword())){
-    // System.out.println("Authentication: password:" + "Bad credentials");
-    // throw new BadCredentialsException("Bad credentials");
-    // }
 
     List<GrantedAuthority> authorities = new ArrayList<>();
     return new UsernamePasswordAuthenticationToken(user, null, authorities);

@@ -46,6 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
               .logout();
   }
+  
   /**
    * Builder Authentication Provider.
    */
@@ -53,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
     auth.authenticationProvider(authenticationProvider);
   }
+
   /**
    * @return BCryptPasswordEncoder.
    */

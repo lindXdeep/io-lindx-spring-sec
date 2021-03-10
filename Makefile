@@ -29,10 +29,10 @@ build:
 lint: lint-default lint-google
 
 open-chrome:
-	google-chrome --new-window http://localhost:8080
+	google-chrome --incognito --new-window http://localhost:8080
 
 open-firefox:
-	firefox --new-window http://localhost:8080
+	firefox --incognito --new-window http://localhost:8080
 
 browse:
 	browse http://localhost:8080
