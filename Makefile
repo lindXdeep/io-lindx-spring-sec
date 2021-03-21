@@ -1,4 +1,4 @@
-.DEFAULT_GOAL := build
+.DEFAULT_GOAL := build-execute
 
 setup:
 	mvn -N io.takari:maven:wrapper -Dmaven=3.6.3
@@ -8,6 +8,12 @@ lint-default:
 
 lint-google:
 	./mvnw checkstyle:check -Dcheckstyle.config.location=./checkstyle/google_checks.xml
+
+lint-spring:
+	./mvnw checkstyle:check -Dcheckstyle.config.location=./checkstyle/spring-checkstyle.xml
+
+format-spring:
+	./mvnw spring-javaformat:apply
 
 clean:
 	./mvnw clean
@@ -26,13 +32,11 @@ redeploy:
 build:
 	./mvnw package war:exploded 
 
-lint: lint-default lint-google
-
 open-chrome:
-	google-chrome --new-window http://localhost:8080
+	google-chrome --incognito --new-window http://localhost:8080
 
 open-firefox:
-	firefox --new-window http://localhost:8080
+	firefox --incognito --new-window http://localhost:8080
 
 browse:
 	browse http://localhost:8080
@@ -41,4 +45,8 @@ code:
 	code-oss $@
 
 
+lint: lint-default lint-google lint-spring
 
+build-execute: lint format-spring build open-chrome
+
+open: open-chrome

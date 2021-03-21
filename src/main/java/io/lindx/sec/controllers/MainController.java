@@ -32,7 +32,7 @@ public class MainController {
    * @param model
    * @return message for user.
    */
-  @GetMapping("/view/{name}")
+  @GetMapping("/user/{name}")
   public String view(@PathVariable("name") final String name, final Model model) {
     model.addAttribute("msg", "Hello " + name + "!");
     return "/index";

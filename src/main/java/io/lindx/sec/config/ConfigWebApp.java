@@ -18,12 +18,12 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 @Configuration
 @ComponentScan(value = "io.lindx.sec")
 @EnableWebMvc
-public class WebConfig implements WebMvcConfigurer {
+public class ConfigWebApp implements WebMvcConfigurer {
 
   private final ApplicationContext applicationContext;
 
   @Autowired
-  public WebConfig(final ApplicationContext applicationContext) {
+  public ConfigWebApp(final ApplicationContext applicationContext) {
     this.applicationContext = applicationContext;
   }
 
