@@ -41,13 +41,13 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
     auth
       .inMemoryAuthentication()
         .withUser("user@user")
-        .password("user")
+        .password(passwordEncoder().encode("user"))
         .roles("USER");
   }
 
-  // В данном примере отключаемшифрование
+  // В данном примере 
   @Bean
-  public static NoOpPasswordEncoder passwordEncoder() {
-      return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+  public static PasswordEncoder passwordEncoder() {
+      return new BCryptPasswordEncoder();
   }
 }
