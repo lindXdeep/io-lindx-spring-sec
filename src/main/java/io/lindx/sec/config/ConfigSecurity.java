@@ -16,32 +16,38 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     
-    
     http
       .authorizeRequests()
-        
-        // делаем доступной только юзером сролью USER
-        .antMatchers("/users").hasAnyRole("USER")
-
-        // все отальные запросы доступны только авторизованным юзерам
+        .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+        .antMatchers("/users").access("hasAnyRole('ADMIN')")
         .anyRequest().authenticated();
     
-    // ннаша кастомная логин форма
     http
       .formLogin()
         .loginPage("/login").permitAll()
         .loginProcessingUrl("/login/process")
           .usernameParameter("email")
           .passwordParameter("password");
+      
+    http
+      .logout()
+        .logoutUrl("/logout");
   }
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
     auth
       .inMemoryAuthentication()
         .withUser("user@user")
         .password(passwordEncoder().encode("user"))
         .roles("USER");
+
+    auth
+      .inMemoryAuthentication()
+        .withUser("admin@admin")
+        .password(passwordEncoder().encode("admin"))
+        .roles("ADMIN");
   }
 
   // Применяем шифрование 
