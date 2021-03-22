@@ -50,7 +50,12 @@ public class AuthController {
    * @return Sign in page.
    */
   @RequestMapping("/login")
-  public String login() {
+  public String login(@RequestParam(name = "error",required = false) final Boolean error, final Model model) {
+
+    if(Boolean.TRUE.equals(error)){
+      model.addAttribute("error", true);
+    }
+    
     return "sign_in";
   }
 

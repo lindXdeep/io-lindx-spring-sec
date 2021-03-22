@@ -20,6 +20,9 @@
     <div>
       <input type="submit" value="Sign In" />
     </div>
+    <div th:if="${error}">
+      <p>Bad credentials</p>
+    </div>
   </form>
 </body>
 

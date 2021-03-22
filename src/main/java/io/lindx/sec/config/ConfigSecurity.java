@@ -29,7 +29,9 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
         .loginPage("/login").permitAll()
         .loginProcessingUrl("/login/process")
           .usernameParameter("email")
-          .passwordParameter("password");
+          .passwordParameter("password")
+          .defaultSuccessUrl("/", true)
+          .failureUrl("/login?error=true");
 
     http
       .logout()
