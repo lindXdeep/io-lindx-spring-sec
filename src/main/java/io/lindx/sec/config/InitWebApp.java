@@ -1,6 +1,9 @@
 package io.lindx.sec.config;
 
+import javax.servlet.Filter;
+
 import org.springframework.core.annotation.Order;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
@@ -31,5 +34,10 @@ public class InitWebApp extends AbstractAnnotationConfigDispatcherServletInitial
   @Override
   protected String[] getServletMappings() {
     return new String[] { "/" };
+  }
+
+  @Override
+  protected Filter[] getServletFilters() {
+    return new Filter[] { new CharacterEncodingFilter("UTF-8", true) };
   }
 }

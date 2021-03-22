@@ -3,6 +3,10 @@ package io.lindx.sec.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import io.lindx.sec.models.User;
@@ -13,16 +17,19 @@ public class UserDaoImpl implements UserDao {
   private static Integer count = 0;
   private List<User> users;
 
+  @Autowired
+  private PasswordEncoder passwordEncoder;
+
   {
+
     users = new ArrayList<>();
 
-    users.add(new User(++count, "Tom", "email1@email.ru", "pass1"));
+    String pass = passwordEncoder.encode("pass1");
+
+    users.add(new User(++count, "Tom", "email1@email.ru", pass));
     users.add(new User(++count, "Bill", "email2@email.ru", "pass2"));
     users.add(new User(++count, "John", "email3@email.ru", "pass3"));
     users.add(new User(++count, "Lue", "email4@email.ru", "pass4"));
-  }
-
-  public UserDaoImpl() {
   }
 
   /**

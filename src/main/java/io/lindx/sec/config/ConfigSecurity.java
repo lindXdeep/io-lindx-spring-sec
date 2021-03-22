@@ -11,10 +11,20 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import io.lindx.sec.security.AuthProviderImpl;
+
 @Configuration
 @EnableWebSecurity
+@ComponentScan(value = "io.lindx.sec.security")
 public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 
+  protected AuthProviderImpl authProvider;
+
+  @Autowired
+  public ConfigSecurity(AuthProviderImpl authProvider) {
+    this.authProvider = authProvider;
+  }
+  
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     
@@ -40,18 +50,7 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-    auth
-      .inMemoryAuthentication()
-        .withUser("user@user")
-        .password(passwordEncoder().encode("user"))
-        .roles("USER");
-
-    auth
-      .inMemoryAuthentication()
-        .withUser("admin@admin")
-        .password(passwordEncoder().encode("admin"))
-        .roles("ADMIN");
+    auth.authenticationProvider(authProvider);
   }
 
   // Применяем шифрование 
