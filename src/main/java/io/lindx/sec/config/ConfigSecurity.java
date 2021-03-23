@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import io.lindx.sec.security.SuccessUserHandler;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
 @Configuration
 @EnableWebSecurity
@@ -19,12 +21,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 
   private final UserDetailsService userDetailsService;
+  private final SuccessUserHandler successUserHandler;
 
   @Autowired
-  public ConfigSecurity(@Qualifier("userDetailsService") UserDetailsService userDetailsService) {
+  public ConfigSecurity(@Qualifier("userDetailsService") UserDetailsService userDetailsService, 
+                                                         SuccessUserHandler successUserHandler) {
     this.userDetailsService = userDetailsService;
+    this.successUserHandler = successUserHandler;
   }
-  
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     
@@ -41,7 +46,8 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
           .usernameParameter("email")
           .passwordParameter("password")
           .defaultSuccessUrl("/", true)
-          .failureUrl("/login?error=true");
+          .failureUrl("/login?error=true")
+          .successHandler(successUserHandler);
 
     http
       .logout()
