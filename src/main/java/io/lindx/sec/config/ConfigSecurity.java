@@ -15,7 +15,7 @@ import io.lindx.sec.security.AuthProviderImpl;
 
 @Configuration
 @EnableWebSecurity
-@ComponentScan(value = "io.lindx.sec.security")
+@ComponentScan(value = "io.lindx.sec")
 public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 
   protected AuthProviderImpl authProvider;
@@ -30,8 +30,8 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
     
     http
       .authorizeRequests()
-        .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-        .antMatchers("/users").access("hasAnyRole('ADMIN')")
+        .antMatchers("/user/**").authenticated() /*.hasAnyRole("USER", "ADMIN")*/
+        .antMatchers("/users").authenticated()/* .access("hasAnyRole('ADMIN')") */
         .anyRequest().authenticated();
     
     http
@@ -54,8 +54,8 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
   }
 
   // Применяем шифрование 
-  @Bean("")
-  public static PasswordEncoder passwordEncoder() {
+  @Bean("passwordEncoder")
+  public static BCryptPasswordEncoder passwordEncoder() {
       return new BCryptPasswordEncoder();
   }
 }

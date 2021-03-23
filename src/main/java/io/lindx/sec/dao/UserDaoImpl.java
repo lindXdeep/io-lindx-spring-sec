@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -17,10 +17,12 @@ public class UserDaoImpl implements UserDao {
   private static Integer count = 0;
   private List<User> users;
 
-  @Autowired
-  private PasswordEncoder passwordEncoder;
+  private BCryptPasswordEncoder passwordEncoder;
 
-  {
+  @Autowired
+  public UserDaoImpl(@Qualifier("passwordEncoder") BCryptPasswordEncoder passwordEncoder) {
+   
+    this.passwordEncoder = passwordEncoder;
 
     users = new ArrayList<>();
 
