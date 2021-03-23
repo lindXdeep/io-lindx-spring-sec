@@ -1,6 +1,7 @@
 package io.lindx.sec.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -8,21 +9,20 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import io.lindx.sec.security.AuthProviderImpl;
-
+import org.springframework.security.core.userdetails.UserDetailsService;
 @Configuration
 @EnableWebSecurity
-@ComponentScan(value = "io.lindx.sec.security")
+@ComponentScan(value = "io.lindx.sec")
 public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 
-  protected AuthProviderImpl authProvider;
+  private final UserDetailsService userDetailsService;
 
   @Autowired
-  public ConfigSecurity(AuthProviderImpl authProvider) {
-    this.authProvider = authProvider;
+  public ConfigSecurity(@Qualifier("userDetailsService") UserDetailsService userDetailsService) {
+    this.userDetailsService = userDetailsService;
   }
   
   @Override
@@ -50,12 +50,12 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.authenticationProvider(authProvider);
+    auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
   }
 
   // Применяем шифрование 
   @Bean
   public static PasswordEncoder passwordEncoder() {
-      return new BCryptPasswordEncoder();
+      return NoOpPasswordEncoder.getInstance();
   }
 }

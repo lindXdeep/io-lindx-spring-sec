@@ -1,35 +1,30 @@
 package io.lindx.sec.dao;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import io.lindx.sec.models.Role;
 import io.lindx.sec.models.User;
 
 @Repository
 public class UserDaoImpl implements UserDao {
 
   private static Integer count = 0;
-  private List<User> users;
 
-  @Autowired
-  private PasswordEncoder passwordEncoder;
+  private final Map<String, User> users;
 
   {
-
-    users = new ArrayList<>();
-
-    String pass = passwordEncoder.encode("pass1");
-
-    users.add(new User(++count, "Tom", "email1@email.ru", pass));
-    users.add(new User(++count, "Bill", "email2@email.ru", "pass2"));
-    users.add(new User(++count, "John", "email3@email.ru", "pass3"));
-    users.add(new User(++count, "Lue", "email4@email.ru", "pass4"));
+    users = new HashMap<>();
+    
+    users.put("user@u", new User(++count, "Tom", "user@u", "user", Collections.singleton(new Role(count,"ROLE_ADMIN"))));
+    users.put("user1@u", new User(++count, "Bill", "user1@u", "u1", Collections.singleton(new Role(count,"ROLE_USER"))));
+    users.put("user2@u", new User(++count, "John", "user2@u", "u2", Collections.singleton(new Role(count,"ROLE_USER"))));
+    users.put("user3@u", new User(++count, "Lue", "user3@u", "u3", Collections.singleton(new Role(count,"ROLE_USER"))));
   }
 
   /**
@@ -38,7 +33,7 @@ public class UserDaoImpl implements UserDao {
   @Override
   public User getUser(final Integer id) {
 
-    return users.stream().filter(u -> u.getId() == id).findAny().orElse(null);
+    return getAll().stream().filter(u -> u.getId() == id).findAny().orElse(null);
   }
 
   /**
@@ -46,7 +41,12 @@ public class UserDaoImpl implements UserDao {
    */
   @Override
   public User getByMail(final String mail) {
-    return users.stream().filter(u -> u.getMail().equals(mail)).findAny().orElse(null);
+
+    if (!users.containsKey(mail)) {
+      return null;
+    }
+
+    return users.get(mail);
   }
 
   /**
@@ -54,8 +54,9 @@ public class UserDaoImpl implements UserDao {
    */
   @Override
   public void setUser(final User user) {
+
     user.setId(++count);
-    users.add(user);
+    users.put(user.getMail(), user);
   }
 
   /**
@@ -63,7 +64,8 @@ public class UserDaoImpl implements UserDao {
    */
   @Override
   public List<User> getAll() {
-    return users;
+
+    return new ArrayList<User>(users.values());
   }
 
   /**
@@ -71,8 +73,11 @@ public class UserDaoImpl implements UserDao {
    */
   @Override
   public void setPassword(final Integer id, final String password) {
+
     User user = getUser(id);
     user.setPassword(password);
+
+    users.put(user.getMail(), user);
   }
 
   /**
@@ -80,6 +85,7 @@ public class UserDaoImpl implements UserDao {
    */
   @Override
   public User getByName(final String name) {
-    return users.stream().filter(u -> u.getName().equals(name)).findAny().orElse(null);
+
+    return getAll().stream().filter(u -> u.getName().equals(name)).findAny().orElse(null);
   }
 }
