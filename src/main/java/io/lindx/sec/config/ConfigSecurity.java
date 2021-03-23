@@ -54,7 +54,7 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
   }
 
   // Применяем шифрование 
-  @Bean
+  @Bean("")
   public static PasswordEncoder passwordEncoder() {
       return new BCryptPasswordEncoder();
   }
