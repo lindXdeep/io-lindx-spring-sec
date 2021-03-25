@@ -3,6 +3,8 @@ package io.lindx.sec.models;
 import java.util.Collection;
 import java.util.Set;
 
+import javax.persistence.Entity;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class User implements UserDetails {
   private Integer id;
   private String name;

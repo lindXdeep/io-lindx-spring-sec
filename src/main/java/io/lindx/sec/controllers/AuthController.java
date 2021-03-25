@@ -55,9 +55,11 @@ public class AuthController {
     if(Boolean.TRUE.equals(error)){
       model.addAttribute("error", true);
     }
-    
+
     return "sign_in";
   }
+
+  
 
   @GetMapping("/logout")
   public String logout(HttpServletRequest request){

@@ -1,10 +1,13 @@
-package io.lindx.sec.config;
+package io.lindx.sec;
 
 import javax.servlet.Filter;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import io.lindx.sec.config.WebMvcConfig;
+import io.lindx.sec.config.WebSecurityConfig;
 
 /**
  * DispatcherServlet.
@@ -25,7 +28,7 @@ public class InitWebApp extends AbstractAnnotationConfigDispatcherServletInitial
    */
   @Override
   protected Class<?>[] getServletConfigClasses() {
-    return new Class<?>[] { ConfigWebApp.class, ConfigSecurity.class };
+    return new Class<?>[] { WebMvcConfig.class, WebSecurityConfig.class };
   }
 
   /**

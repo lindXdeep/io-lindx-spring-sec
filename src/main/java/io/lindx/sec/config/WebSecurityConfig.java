@@ -18,14 +18,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @Configuration
 @EnableWebSecurity
 @ComponentScan(value = "io.lindx.sec")
-public class ConfigSecurity extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final UserDetailsService userDetailsService;
   private final SuccessUserHandler successUserHandler;
 
   @Autowired
-  public ConfigSecurity(@Qualifier("userDetailsService") UserDetailsService userDetailsService, 
-                                                         SuccessUserHandler successUserHandler) {
+  public WebSecurityConfig(@Qualifier("userDetailsService") UserDetailsService userDetailsService, 
+                                                            SuccessUserHandler successUserHandler) {
     this.userDetailsService = userDetailsService;
     this.successUserHandler = successUserHandler;
   }

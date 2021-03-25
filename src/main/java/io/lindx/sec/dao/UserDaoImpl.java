@@ -21,7 +21,7 @@ public class UserDaoImpl implements UserDao {
   {
     users = new HashMap<>();
     
-    users.put("user@u", new User(++count, "Tom", "user@u", "user", Collections.singleton(new Role(count,"ROLE_ADMIN"))));
+    users.put("admin@admin", new User(++count, "Tom", "admin@admin", "admin", Collections.singleton(new Role(count,"ROLE_ADMIN"))));
     users.put("user1@u", new User(++count, "Bill", "user1@u", "u1", Collections.singleton(new Role(count,"ROLE_USER"))));
     users.put("user2@u", new User(++count, "John", "user2@u", "u2", Collections.singleton(new Role(count,"ROLE_USER"))));
     users.put("user3@u", new User(++count, "Lue", "user3@u", "u3", Collections.singleton(new Role(count,"ROLE_USER"))));
