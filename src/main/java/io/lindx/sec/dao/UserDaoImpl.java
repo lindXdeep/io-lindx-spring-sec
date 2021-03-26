@@ -1,6 +1,5 @@
 package io.lindx.sec.dao;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,7 +8,6 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
-import io.lindx.sec.models.Role;
 import io.lindx.sec.models.User;
 
 @Repository
@@ -17,6 +15,7 @@ public class UserDaoImpl implements UserDao {
 
   @PersistenceContext(unitName = "entityManagerFactory")
 	private EntityManager entityManager;
+
 
   @Override
   public User getUserById(Long id) {
@@ -31,15 +30,15 @@ public class UserDaoImpl implements UserDao {
   }
 
   @Override
-  public User getUserByMail(String mail) {
+  public User getUserByMail(String email) {
 
     TypedQuery<User> query = entityManager.createQuery(
 
-      "select u from User u where email =: mail", User.class
+      "select u from User u where email =: email", User.class
 
     );
     
-    return query.setParameter("mail", mail).getResultList().stream().findAny().orElse(null);
+    return query.setParameter("email", email).getResultList().stream().findAny().orElse(null);
   }
 
   @Override
@@ -47,7 +46,7 @@ public class UserDaoImpl implements UserDao {
     
     TypedQuery<User> query = entityManager.createQuery(
 
-      "select u from User u where username =: name", User.class
+      "select u from User u where name =: name", User.class
 
     );
     
@@ -56,16 +55,6 @@ public class UserDaoImpl implements UserDao {
 
   @Override
   public Boolean setUser(User user) {
-
-    if(getUserByMail(user.getMail()) != null){
-      return false;
-    }
-
-    Role user_role = new Role();
-    user_role.setTitle("ROLE_USER");
-
-    user.setRoles(Collections.singleton(user_role));
-    //user.setPassword(user.getPassword());  //TODO: add bcrypt
 
     entityManager.persist(user);
 

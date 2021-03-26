@@ -34,17 +34,17 @@ import lombok.NoArgsConstructor;
 public class User implements UserDetails {
 
   @Id
-  @Column(name = "id", unique = true, nullable = false)
+  @Column(name = "id", unique = true )
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  
-  @Column(name = "username", length = 100, nullable = false)
+
+  @Column(name = "username", length = 100 )
   private String username;
 
-  @Column(name = "email", length = 100, nullable = false)
-  private String mail;
+  @Column(name = "email", length = 100 )
+  private String email;
 
-  @Column(name = "password_hash", nullable = false)
+  @Column(name = "password" )
   private String password;
 
   @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

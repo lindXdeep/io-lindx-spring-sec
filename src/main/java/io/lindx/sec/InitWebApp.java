@@ -7,7 +7,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import io.lindx.sec.config.WebMvcConfig;
-import io.lindx.sec.config.WebSecurityConfig;
+import io.lindx.sec.config.SecurityConfig;
 
 /**
  * DispatcherServlet.
@@ -28,7 +28,7 @@ public class InitWebApp extends AbstractAnnotationConfigDispatcherServletInitial
    */
   @Override
   protected Class<?>[] getServletConfigClasses() {
-    return new Class<?>[] { WebMvcConfig.class, WebSecurityConfig.class };
+    return new Class<?>[] { WebMvcConfig.class, SecurityConfig.class };
   }
 
   /**

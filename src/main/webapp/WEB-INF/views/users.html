@@ -8,7 +8,7 @@
 <body>
   <meta charset="UTF-8">
   <div th:each=" user : ${users}">
-    <p th:text="${user.name} + ' '+ ${user.mail}">user</p>
+    <p th:text="${user.username} + ' '+ ${user.email}">user</p>
   </div>
 </body>
 

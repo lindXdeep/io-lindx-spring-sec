@@ -7,6 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -18,16 +19,23 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @Configuration
 @EnableWebSecurity
 @ComponentScan(value = "io.lindx.sec")
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final UserDetailsService userDetailsService;
   private final SuccessUserHandler successUserHandler;
 
   @Autowired
-  public WebSecurityConfig(@Qualifier("userDetailsService") UserDetailsService userDetailsService, 
-                                                            SuccessUserHandler successUserHandler) {
+  public SecurityConfig(@Qualifier("userDetailsService") UserDetailsService userDetailsService, 
+                        SuccessUserHandler successUserHandler) {
     this.userDetailsService = userDetailsService;
     this.successUserHandler = successUserHandler;
+  }
+
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+      web
+        .ignoring()
+          .antMatchers("/setadmin");
   }
 
   @Override
@@ -35,8 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
     http
       .authorizeRequests()
-        .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-        .antMatchers("/users").access("hasAnyRole('ADMIN')")
+        .antMatchers("/user/**").hasAnyRole("ROLE_USER", "ROLE_ADMIN")
+        .antMatchers("/users").access("hasAnyRole('ROLE_ADMIN')")
         .anyRequest().authenticated();
     
     http

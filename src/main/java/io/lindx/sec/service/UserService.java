@@ -7,7 +7,7 @@ import io.lindx.sec.models.User;
 public interface UserService {
   User getUser(Long id);
 
-  User getByMail(String mail);
+  User getByMail(String email);
 
   Boolean setUser(User user);
 

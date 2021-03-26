@@ -7,10 +7,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
 import org.springframework.transaction.annotation.Transactional;
+
 
 import io.lindx.sec.dao.UserDao;
 import io.lindx.sec.models.User;
+
 @Service("userDetailsService")
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -24,8 +27,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
   }
 
   @Override
-  public User getByMail(final String mail) {
-    return userDao.getUserByMail(mail);
+  public User getByMail(final String email) {
+    return userDao.getUserByMail(email);
   }
 
   @Override
@@ -59,10 +62,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
    * интерфейс UserDetailsService, с единственным методом:
    */
   @Override
-  public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-    User user = userDao.getUserByMail(mail);
-
+    User user = userDao.getUserByMail(email);
+    
     if (user == null) {
       throw new UsernameNotFoundException("User not found");
     }

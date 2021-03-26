@@ -1,5 +1,9 @@
 package io.lindx.sec.controllers;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,21 +17,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import io.lindx.sec.models.Role;
 import io.lindx.sec.models.User;
 import io.lindx.sec.service.UserService;
 
 @Controller
 public class AuthController {
 
-  @Autowired
   private UserService userService;
+
+  @Autowired
+  public AuthController(UserService userService) {
+    this.userService = userService;
+  }
+
   /**
    * Sing up.
    * @param model
    * @return Sing up page.
    */
   @GetMapping("/sign_up")
-  public String getSignUp(final Model model) {
+  public String getSignUp(Model model) {
     model.addAttribute("user", new User());
     return "sign_up";
   }
@@ -39,7 +49,14 @@ public class AuthController {
    */
   @PostMapping("/sign_up")
   public String signUp(@ModelAttribute final User user) {
+     
+    Role role = new Role();
+    role.setTitle("ROLE_USER");
+
+    user.setRoles(Collections.singleton(role));
+
     userService.setUser(user);
+
     return "redirect:/users";
   }
 
@@ -59,8 +76,6 @@ public class AuthController {
     return "sign_in";
   }
 
-  
-
   @GetMapping("/logout")
   public String logout(HttpServletRequest request){
 
@@ -71,4 +86,27 @@ public class AuthController {
     }
     return "redirect:/sign_in";
   }
+
+  @GetMapping("/setadmin")
+  public String setadmin(
+                      @RequestParam(name = "m", required = false) String email,
+                      @RequestParam(name = "p", required = false) String password
+  ) {
+
+    Role role = new Role();
+    role.setTitle("ROLE_ADMIN");
+
+    User admin = new User();
+        admin.setUsername("admin");
+        admin.setEmail(email);
+        admin.setPassword(password);
+        admin.setRoles(Collections.singleton(role));
+
+    userService.setUser(admin);
+
+    return "redirect:/";
+  }
 }
+
+  
+

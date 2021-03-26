@@ -1,7 +1,5 @@
 package io.lindx.sec.controllers;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,13 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import io.lindx.sec.models.User;
 import io.lindx.sec.service.UserService;
 
 @Controller
 public class MainController {
-
-  @Autowired
-  private DataSource dataSource;
 
   @Autowired
   private UserService userService;
@@ -52,8 +48,15 @@ public class MainController {
    * @return user.
    */
   @GetMapping("/user")
-  public String user(@RequestParam(value = "id", defaultValue = "1") final  Long id, final Model model) {
-    model.addAttribute("user", userService.getUser(id));
+  public String user(@RequestParam(value = "id", defaultValue = "1") final Long id, 
+                    final Model model) {
+
+    User user = userService.getUser(id);  
+    
+    System.out.println(user);
+
+    model.addAttribute("user", user );
+
     return "main";
   }
 

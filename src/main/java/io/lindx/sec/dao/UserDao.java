@@ -7,7 +7,7 @@ import io.lindx.sec.models.User;
 public interface UserDao {
   User getUserById(Long id);
 
-  User getUserByMail(String mail);
+  User getUserByMail(String email);
 
   User getUserByName(String name);
 
