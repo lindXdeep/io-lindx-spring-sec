@@ -1,5 +1,6 @@
 package io.lindx.sec.dao;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,13 +9,14 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
+import io.lindx.sec.models.Role;
 import io.lindx.sec.models.User;
 
 @Repository
 public class UserDaoImpl implements UserDao {
 
   @PersistenceContext(unitName = "entityManagerFactory")
-  private EntityManager entityManager;
+	private EntityManager entityManager;
 
   @Override
   public User getUserById(Long id) {
@@ -53,9 +55,21 @@ public class UserDaoImpl implements UserDao {
   }
 
   @Override
-  public void setUser(User user) {
+  public Boolean setUser(User user) {
+
+    if(getUserByMail(user.getMail()) != null){
+      return false;
+    }
+
+    Role user_role = new Role();
+    user_role.setTitle("ROLE_USER");
+
+    user.setRoles(Collections.singleton(user_role));
+    //user.setPassword(user.getPassword());  //TODO: add bcrypt
 
     entityManager.persist(user);
+
+    return true;
   }
 
   @Override

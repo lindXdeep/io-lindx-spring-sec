@@ -6,9 +6,14 @@ import io.lindx.sec.models.User;
 
 public interface UserService {
   User getUser(Long id);
+
   User getByMail(String mail);
-  void setUser(User user);
+
+  Boolean setUser(User user);
+
   void setPassword(Long id, String password);
+
   User getByName(String name);
+
   List<User> getAll();
 }

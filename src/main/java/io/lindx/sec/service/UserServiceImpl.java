@@ -7,15 +7,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import io.lindx.sec.dao.UserDaoImpl;
+import io.lindx.sec.dao.UserDao;
 import io.lindx.sec.models.User;
-
 @Service("userDetailsService")
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService, UserDetailsService {
 
   @Autowired
-  private UserDaoImpl userDao;
+  private UserDao userDao;
 
   @Override
   public User getUser(final Long id) {
@@ -28,9 +29,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
   }
 
   @Override
-  public void setUser(final User user) {
+  @Transactional
+  public Boolean setUser(final User user) {
 
     userDao.setUser(user);
+
+    return true;
   }
 
   @Override
@@ -44,6 +48,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
   }
 
   @Override
+  @Transactional
   public void setPassword(final Long id, final String password) {
     userDao.setPassword(id, password);
   }
@@ -56,7 +61,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
 
-    return userDao.getUserByMail(mail);
-  }
+    User user = userDao.getUserByMail(mail);
 
+    if (user == null) {
+      throw new UsernameNotFoundException("User not found");
+    }
+
+    return user;
+  }
 }
