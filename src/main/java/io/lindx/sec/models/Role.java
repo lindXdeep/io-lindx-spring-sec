@@ -1,18 +1,47 @@
 package io.lindx.sec.models;
 
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.springframework.security.core.GrantedAuthority;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+/**
+ * Role
+ */
 @Data
 @AllArgsConstructor
-public class Role implements GrantedAuthority {
-  private Integer id;
-  private String role;
+@NoArgsConstructor
 
-	@Override
-	public String getAuthority() {
-		return role;
-	}
+@Entity
+@Table(name = "roles")
+public class Role implements GrantedAuthority {
+
+  @Id
+  @Column(name = "id", nullable = false, unique = true)
+  private Long id;
+
+  @Column(name = "role_name")
+  private String title;
+
+  @Transient
+  @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+  private Set<User> users;
+
+  @Override
+  public String getAuthority() {
+    return title;
+  }
 }

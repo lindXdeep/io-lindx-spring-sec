@@ -5,10 +5,15 @@ import java.util.List;
 import io.lindx.sec.models.User;
 
 interface UserDao {
-  User getUser(Integer id);
-  User getByMail(String mail);
-  User getByName(String name);
+  User getUserById(Long id);
+
+  User getUserByMail(String mail);
+
+  User getUserByName(String name);
+
   void setUser(User user);
-  void setPassword(Integer id, String password);
-  List<User> getAll();
+
+  void setPassword(Long id, String password);
+
+  List<User> getAllUser();
 }

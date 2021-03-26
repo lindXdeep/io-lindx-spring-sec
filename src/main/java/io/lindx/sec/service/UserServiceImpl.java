@@ -17,52 +17,34 @@ public class UserServiceImpl implements UserService, UserDetailsService {
   @Autowired
   private UserDaoImpl userDao;
 
-  /**
-   * service method.
-   */
   @Override
-  public User getUser(final Integer id) {
-    return userDao.getUser(id);
+  public User getUser(final Long id) {
+    return userDao.getUserById(id);
   }
 
-  /**
-   * service method.
-   */
   @Override
   public User getByMail(final String mail) {
-    return userDao.getByMail(mail);
+    return userDao.getUserByMail(mail);
   }
 
-  /**
-   * service method.
-   */
   @Override
   public void setUser(final User user) {
 
     userDao.setUser(user);
   }
 
-  /**
-   * service method.
-   */
   @Override
   public List<User> getAll() {
-    return userDao.getAll();
+    return userDao.getAllUser();
   }
 
-  /**
-   * service method.
-   */
   @Override
   public User getByName(final String name) {
-    return userDao.getByName(name);
+    return userDao.getUserByName(name);
   }
 
-  /**
-   * service method.
-   */
   @Override
-  public void setPassword(final Integer id, final String password) {
+  public void setPassword(final Long id, final String password) {
     userDao.setPassword(id, password);
   }
 
@@ -74,6 +56,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
 
-    return userDao.getByMail(mail);
+    return userDao.getUserByMail(mail);
   }
+
 }

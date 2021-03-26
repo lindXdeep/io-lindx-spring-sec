@@ -1,91 +1,78 @@
 package io.lindx.sec.dao;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
-import io.lindx.sec.models.Role;
 import io.lindx.sec.models.User;
 
 @Repository
 public class UserDaoImpl implements UserDao {
 
-  private static Integer count = 0;
+  @PersistenceContext(unitName = "entityManagerFactory")
+  private EntityManager entityManager;
 
-  private final Map<String, User> users;
+  @Override
+  public User getUserById(Long id) {
 
-  {
-    users = new HashMap<>();
+    TypedQuery<User> query = entityManager.createQuery(
+
+        "select u from User u where u.id =: id", User.class
+
+    );
+
+    return query.setParameter("id", id).getResultList().stream().findAny().orElse(null);
+  }
+
+  @Override
+  public User getUserByMail(String mail) {
+
+    TypedQuery<User> query = entityManager.createQuery(
+
+      "select u from User u where email =: mail", User.class
+
+    );
     
-    users.put("admin@admin", new User(++count, "Tom", "admin@admin", "admin", Collections.singleton(new Role(count,"ROLE_ADMIN"))));
-    users.put("user1@u", new User(++count, "Bill", "user1@u", "u1", Collections.singleton(new Role(count,"ROLE_USER"))));
-    users.put("user2@u", new User(++count, "John", "user2@u", "u2", Collections.singleton(new Role(count,"ROLE_USER"))));
-    users.put("user3@u", new User(++count, "Lue", "user3@u", "u3", Collections.singleton(new Role(count,"ROLE_USER"))));
+    return query.setParameter("mail", mail).getResultList().stream().findAny().orElse(null);
   }
 
-  /**
-   * get user by id.
-   */
   @Override
-  public User getUser(final Integer id) {
+  public User getUserByName(String name) {
+    
+    TypedQuery<User> query = entityManager.createQuery(
 
-    return getAll().stream().filter(u -> u.getId() == id).findAny().orElse(null);
+      "select u from User u where username =: name", User.class
+
+    );
+    
+    return query.setParameter("name", name).getResultList().stream().findAny().orElse(null);
   }
 
-  /**
-   * get user by enail.
-   */
   @Override
-  public User getByMail(final String mail) {
+  public void setUser(User user) {
 
-    if (!users.containsKey(mail)) {
-      return null;
-    }
-
-    return users.get(mail);
+    entityManager.persist(user);
   }
 
-  /**
-   * add user.
-   */
   @Override
-  public void setUser(final User user) {
+  public void setPassword(Long id, String password) {
 
-    user.setId(++count);
-    users.put(user.getMail(), user);
-  }
-
-  /**
-   * get all users.
-   */
-  @Override
-  public List<User> getAll() {
-
-    return new ArrayList<User>(users.values());
-  }
-
-  /**
-   * Update password for user.
-   */
-  @Override
-  public void setPassword(final Integer id, final String password) {
-
-    User user = getUser(id);
+    User user = getUserById(id);
     user.setPassword(password);
-
-    users.put(user.getMail(), user);
+    entityManager.merge(user);
   }
 
-  /**
-   * get user by name.
-   */
   @Override
-  public User getByName(final String name) {
+  public List<User> getAllUser() {
 
-    return getAll().stream().filter(u -> u.getName().equals(name)).findAny().orElse(null);
+    return entityManager.createQuery(
+
+        "select u from User u", User.class
+
+    ).getResultList();
   }
 }

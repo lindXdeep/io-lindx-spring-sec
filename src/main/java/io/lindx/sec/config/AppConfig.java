@@ -27,7 +27,7 @@ public class AppConfig {
       dataSource.setDriverClassName(environment.getProperty("db.driver"));
       dataSource.setUrl(environment.getProperty("db.url"));
       dataSource.setUsername(environment.getProperty("db.username"));
-      dataSource.setPassword(environment.getProperty("db.passsword"));
+      dataSource.setPassword(environment.getProperty("db.password"));
 
     return dataSource;
   }

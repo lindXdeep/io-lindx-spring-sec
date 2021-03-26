@@ -12,6 +12,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
+import io.lindx.sec.models.Role;
 import io.lindx.sec.models.User;
 
 @Configuration
@@ -40,7 +41,7 @@ public class HibernateConfig {
       factoryBean.setDataSource(dataSource);
       factoryBean.setHibernateProperties(properties);
 
-      factoryBean.setAnnotatedClasses(User.class);
+      factoryBean.setAnnotatedClasses(User.class, Role.class);
 
     return factoryBean;
   }

@@ -52,7 +52,7 @@ public class MainController {
    * @return user.
    */
   @GetMapping("/user")
-  public String user(@RequestParam(value = "id", defaultValue = "1") final  Integer id, final Model model) {
+  public String user(@RequestParam(value = "id", defaultValue = "1") final  Long id, final Model model) {
     model.addAttribute("user", userService.getUser(id));
     return "main";
   }
